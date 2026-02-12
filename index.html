@@ -1,0 +1,123 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>ERP · Cashbook · Ledger · Invoice</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- LOGIN SCREEN (with API base field) -->
+    <div id="loginScreen" class="dashboard" style="display: block;">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo"><i class="fas fa-file-invoice"></i></div>
+                <div class="login-title">ERP Reports</div>
+                <div class="login-sub">Cashbook · Ledger · Invoice</div>
+            </div>
+            <div id="loginError" class="hidden"></div>
+            <!-- API BASE URL on login screen (set before login) -->
+            <div class="input-group-modern api-base-login">
+                <i class="fas fa-link"></i>
+                <input type="text" id="loginApiBase" placeholder="API base URL" value="https://localhost:7193/api/Reports">
+            </div>
+            <div class="input-group-modern">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" placeholder="Username" value="admin">
+            </div>
+            <div class="input-group-modern">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" value="admin">
+            </div>
+            <button class="btn-login" id="loginBtn">
+                <i class="fas fa-arrow-right-to-bracket"></i> Login
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN APPLICATION (hidden after login) -->
+    <div id="appScreen" class="dashboard app-container">
+        <div class="app-card">
+            <!-- App Header with Firm Info & Logout -->
+            <div class="app-header">
+                <div class="firm-badge">
+                    <div class="firm-icon"><i class="fas fa-building"></i></div>
+                    <div class="firm-details">
+                        <h1 id="firmNameDisplay">Cash & Reports</h1>
+                        <div class="firm-meta">
+                            <span id="userNameDisplay"><i class="fas fa-user"></i> admin</span>
+                            <span id="firmAddressDisplay"><i class="fas fa-map-pin"></i> </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <span class="user-name" id="headerUsername">admin</span>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+
+            <!-- API BASE row now readonly display (value copied from login) -->
+            <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 1.8rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; background: white; padding: 4px 4px 4px 24px; border-radius: 48px; border: 1px solid #d0dee8; flex:2;">
+                    <i class="fas fa-link" style="color: #3c7a94;"></i>
+                    <input type="text" id="appBaseApiInput" placeholder="API base URL" readonly style="border: none; background: #f3f8fb; padding: 12px 8px; width: 100%; outline: none; color: #1f4a5a;">
+                </div>
+                <div style="display: flex; align-items: center; background: white; padding: 4px 4px 4px 24px; border-radius: 48px; border: 1px solid #d0dee8;">
+                    <i class="fas fa-calendar"></i>
+                    <input type="date" id="appDateInput" style="border: none; padding: 12px; background: transparent; outline: none;">
+                </div>
+            </div>
+
+            <!-- SIDE MENU LAYOUT -->
+            <div class="side-menu-layout">
+                <!-- Vertical side menu -->
+                <div class="vertical-menu">
+                    <button class="menu-btn active" id="menuCashbook">
+                        <i class="fas fa-cash-register"></i> Cashbook
+                    </button>
+                    <button class="menu-btn" id="menuLedger">
+                        <i class="fas fa-book"></i> Ledger
+                    </button>
+                    <button class="menu-btn" id="menuInvoice">
+                        <i class="fas fa-file-invoice-dollar"></i> Invoice
+                    </button>
+                </div>
+
+                <!-- CONTENT PANEL (dynamic) – the main content will be replaced via JS -->
+                <div id="mainContentPanel" class="content-panel">
+                    <!-- cashbook is default, but dynamically loaded -->
+                </div>
+            </div> <!-- end side-menu-layout -->
+            <div class="footer-note">
+                <i class="fas fa-shield-alt"></i> Secure · click invoice number to see detail
+            </div>
+        </div> <!-- end app-card -->
+    </div> <!-- end appScreen -->
+
+    <!-- MODAL for Invoice Detail -->
+    <div id="invoiceDetailModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-invoice" style="margin-right: 12px;"></i> Invoice Detail</h3>
+                <button class="modal-close" id="modalCloseBtn">&times;</button>
+            </div>
+            <div id="modalInvoiceDetailBody">
+                <!-- dynamic content -->
+                <div style="text-align:center; padding:2rem;"><i class="fas fa-spinner fa-pulse"></i> Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript modules -->
+    <script src="auth.js"></script>
+    <script src="cashbook.js"></script>
+    <script src="ledger.js"></script>
+    <script src="invoice.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
